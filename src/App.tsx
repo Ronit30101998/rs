@@ -1,22 +1,26 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import FeaturedProperties from './components/FeaturedProperties';
-import Services from './components/Services';
-import Testimonials from './components/Testimonials';
-import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import PropertyDetails from './pages/PropertyDetails';
+import SearchResults from './pages/SearchResults';
 
 function App() {
   return (
-    <div className="bg-white">
-      <Navigation />
-      <Hero />
-      <FeaturedProperties />
-      <Services />
-      <Testimonials />
-      <ContactForm />
-      <Footer />
-    </div>
+    <Router>
+      <AuthProvider>
+        <div className="bg-white">
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/property/:id" element={<PropertyDetails />} />
+            <Route path="/search" element={<SearchResults />} />
+          </Routes>
+          <Footer />
+        </div>
+      </AuthProvider>
+    </Router>
   );
 }
 

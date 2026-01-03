@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Bed, Bath, MapPin, Heart } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
@@ -15,6 +16,7 @@ interface Property {
 }
 
 export default function FeaturedProperties() {
+  const navigate = useNavigate();
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -197,7 +199,10 @@ export default function FeaturedProperties() {
                   </div>
                 </div>
 
-                <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                <button
+                  onClick={() => navigate(`/property/${property.id}`)}
+                  className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+                >
                   View Details
                 </button>
               </div>

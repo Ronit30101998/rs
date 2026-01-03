@@ -1,9 +1,21 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 
 export default function Hero() {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
   };
 
   return (
@@ -36,21 +48,25 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Search Bar */}
         <div className="mt-16 max-w-3xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-2 flex flex-col md:flex-row gap-2">
+          <form onSubmit={handleSearch} className="bg-white rounded-lg shadow-lg p-2 flex flex-col md:flex-row gap-2">
             <div className="flex-1 flex items-center gap-3 px-4 py-3">
               <Search className="w-5 h-5 text-gray-400" />
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by location, property type..."
                 className="w-full outline-none text-gray-700"
               />
             </div>
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition md:w-auto w-full">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition md:w-auto w-full"
+            >
               Search
             </button>
-          </div>
+          </form>
         </div>
       </div>
 
